@@ -27,8 +27,7 @@ class LoanController extends Controller
         $parameters = $request->all();
 
         $rules =  array(
-            'amount'    => 'required',
-            'amount'    => 'integer',
+            'amount'    => 'required|integer',
         );
         $amount = $parameters['amount'];
  
