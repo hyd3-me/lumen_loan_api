@@ -10,7 +10,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class LoanTest extends TestCase {
     
-    use DatabaseMigrations;
+    // use DatabaseMigrations;
 
     public function testGetLoans()
     {
