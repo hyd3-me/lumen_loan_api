@@ -10,7 +10,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class LoanTest extends TestCase {
     
-    // use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function testGetLoans()
     {
@@ -25,6 +25,25 @@ class LoanTest extends TestCase {
         $response = $this->call('POST', 'api/v1/loans', ['amount' => 999]);
         $this->assertEquals(201, $response->status());
 
+    }
+
+    public function testPutLoans() {
+        $amount = 369;
+        $response = $this->json('POST', 'api/v1/loans', ['amount' => $amount]);
+        $response->seeJson([
+            'amount' => $amount,
+         ]
+        );
+        $data = json_decode($response->response->getContent(), true);
+        // echo $data['id'];
+        $new_amount = 366;
+        $_url = 'api/v1/loans/' . $data['id'];
+        $response = $this->json('PUT', $_url, ['amount' => $new_amount]);
+        $response->seeJson([
+            'amount' => $new_amount,
+         ]
+        );
+        $this->seeInDatabase('loans', ['id' => $data['id'], 'amount' => $new_amount]);
     }
 
     public function testGetLoanById() {
