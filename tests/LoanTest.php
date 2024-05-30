@@ -58,4 +58,11 @@ class LoanTest extends TestCase {
             'updated_at' => $loan->updated_at,
          ]);
     }
+
+    public function testDelLoan() {
+        $amount = 777;
+        $loan = Loan::create(['amount' => $amount]);
+        $response = $this->json('DELETE', "api/v1/loans/$loan->id");
+        $this->notseeInDatabase('loans', ['id' => $loan['id'], 'amount' => $amount]);
+    }
 }
